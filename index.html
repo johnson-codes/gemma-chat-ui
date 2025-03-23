@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Chat with Gemma</title>
+  <title>Chat with Models</title>
   <style>
     body {
       font-family: sans-serif;
       max-width: 700px;
       margin: 2rem auto;
     }
-    textarea {
+    textarea, select {
       width: 100%;
+      margin-top: 1rem;
     }
     button {
       padding: 0.5rem 1rem;
@@ -27,15 +28,23 @@
   </style>
 </head>
 <body>
-  <h1>Ask Gemma 2b</h1>
+  <h1>Ask a Model</h1>
+
+  <label for="model">Choose a model:</label>
+  <select id="model">
+    <option value="gemma:2b">Gemma 2b</option>
+    <option value="llama3.2:1b">LLaMA 3.2 1b</option>
+  </select>
+
   <textarea id="prompt" rows="5" placeholder="Type your prompt here..."></textarea>
   <br>
-  <button onclick="askGemma()">Ask</button>
+  <button onclick="askModel()">Ask</button>
   <pre id="response">...</pre>
 
   <script>
-    async function askGemma() {
+    async function askModel() {
       const prompt = document.getElementById('prompt').value;
+      const model = document.getElementById('model').value;
       const responseElement = document.getElementById('response');
       responseElement.textContent = "Loading...";
 
@@ -47,7 +56,7 @@
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ model: 'gemma:2b', prompt })
+          body: JSON.stringify({ model, prompt })
         });
 
         const reader = res.body.getReader();
