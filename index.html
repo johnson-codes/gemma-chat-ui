@@ -11,15 +11,20 @@
   <button onclick="askGemma()">Ask</button>
   <pre id="response"></pre>
 
+  
   <script>
     async function askGemma() {
       const prompt = document.getElementById('prompt').value;
-      const res = await fetch('https://ollama-gemma-server-961406161831.us-west1.run.app/api/generate', {
+  
+      const corsProxy = 'https://corsproxy.io/?';
+      const backendURL = 'https://ollama-gemma-server-961406161831.us-west1.run.app/api/generate';
+  
+      const res = await fetch(`${corsProxy}${backendURL}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ model: 'gemma3:1b', prompt })
       });
-
+  
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let result = '';
@@ -36,5 +41,7 @@
       }
     }
   </script>
+
+
 </body>
 </html>
