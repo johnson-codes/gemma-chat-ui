@@ -27,7 +27,7 @@
   </style>
 </head>
 <body>
-  <h1>Ask Gemma3:1b</h1>
+  <h1>Ask Gemma 2b</h1>
   <textarea id="prompt" rows="5" placeholder="Type your prompt here..."></textarea>
   <br>
   <button onclick="askGemma()">Ask</button>
@@ -40,7 +40,6 @@
       responseElement.textContent = "Loading...";
 
       const backendURL = 'https://ollama-gemma-server-961406161831.us-west1.run.app/api/generate';
-      const payload = JSON.stringify({ model: 'gemma3:1b', prompt });
 
       try {
         const res = await fetch(backendURL, {
@@ -48,7 +47,7 @@
           headers: {
             'Content-Type': 'application/json'
           },
-          body: payload
+          body: JSON.stringify({ model: 'gemma:2b', prompt })
         });
 
         const reader = res.body.getReader();
